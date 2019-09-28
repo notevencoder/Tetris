@@ -24,10 +24,6 @@ public class Stick extends Figure {
             mas[y][x] = color;
             mas[y + 1][x] = color;
         }
-        else{
-            draw();
-            GameLogic.ChangeGameCond(1);
-        }
     }
     @Override
     void fall() {
@@ -78,20 +74,19 @@ public class Stick extends Figure {
                         draw();
                     }
                 }
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && x+2 < GameLogic.width) {
-                        if(mas[y][x+2]==0) {
-                            clear();
-                            x++;
-                            draw();
-                        }
+                if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && x+2 < GameLogic.width) {
+                    if(mas[y][x+2]==0) {
+                        clear();
+                        x++;
+                        draw();
                     }
+                }
                 break;
         }
-
+        rotate();
     }
-    @Override
     //У палки есть 2 состоян
-        // ия вращения : 0- вертикальное, 1 - горизонтальное
+    // ия вращения : 0- вертикальное, 1 - горизонтальное
     void rotate() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             if (Check(rot + 1 >1 ? 0:1)) {
@@ -105,7 +100,7 @@ public class Stick extends Figure {
                 clear();
                 rot= rot - 1 <0 ? 1:0;
                 draw();
-                }
+            }
         }
     }
 
@@ -125,7 +120,7 @@ public class Stick extends Figure {
                 mas[y][x+1] = color;
                 break;
         }
-}
+    }
     @Override
     void clear(){
         switch (rot){

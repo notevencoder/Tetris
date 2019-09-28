@@ -15,11 +15,11 @@ public class JCorner extends Figure {
     //Следующие массиввы должны состоять из четного числа элементов, четные координаты - X, нечетные - Y
     //Это вспомогательные массивы, необходимые для проверки условий поворота, движения
     //------------------------------------//
-        int[] checkLeft;
-        int[] checkRight;
-        int[] checkBottom;
+    int[] checkLeft;
+    int[] checkRight;
+    int[] checkBottom;
 
-        int[] deltaCoords = new int[6]; //относительные координаты фигуры
+    int[] deltaCoords = new int[6]; //относительные координаты фигуры
     //-------------------------------------//
 
 
@@ -63,6 +63,12 @@ public class JCorner extends Figure {
             clear();
             rotate();
             draw();
+            return;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+            clear();
+            rotateBack();
+            draw();
         }
     }
 
@@ -96,9 +102,12 @@ public class JCorner extends Figure {
     void rotate(){
         setState(state == 3? 0 : state+1);
     }
+    void rotateBack(){
+        setState(state == 0? 3 : state-1);
+    }
 
 
-//вспомогательная функция, получающая на вход массив координат переменной длины, возвращающая true, если пересечений не найдено
+    //вспомогательная функция, получающая на вход массив координат переменной длины, возвращающая true, если пересечений не найдено
     boolean checkCollisions(int... coordsXY){
         boolean noCollisions = true;
         int checkX, checkY;
@@ -115,7 +124,7 @@ public class JCorner extends Figure {
     }
 
 
-// изменить состояние
+    // изменить состояние
     void setState(int state){
         switch (state){
             case 0:{
