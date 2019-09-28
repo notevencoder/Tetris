@@ -15,15 +15,6 @@ public class Square extends Figure {
     int height = GameLogic.height;
     int width = GameLogic.width;
     @Override
-    void setNegative() {
-        mas[y][x]     *= -1;
-        mas[y+1][x]   *= -1;
-        mas[y][x+1]   *= -1;
-        mas[y+1][x+1] *= -1;
-        isNegative = true;
-    }
-
-    @Override
     void spawn(int x, int y) {
         if (mas[y + 2][x] == 0 && mas[y + 2][x + 1] == 0){
             mas[y][x] =     color;
@@ -36,33 +27,46 @@ public class Square extends Figure {
     @Override
     void fall() {
         if(y+2 < GameLogic.height && mas[y+2][x]==0 && mas[y+2][x+1]==0){
+            clear();
             y++;
+            draw();
         }
-        else isNegative = true;
+        else isLanded = true;
     }
 
     @Override
-    boolean move() {
+    void move() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && x > 0){
-            if(mas[y][x-1]==0&&mas[y+1][x-1]==0)
-            x--;
-            return true;
+            if(mas[y][x-1]==0&&mas[y+1][x-1]==0){
+                clear();
+                x--;
+                draw();
+                return;
+            }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && x+2 < GameLogic.width) {
-            if(mas[y][x+2]==0&&mas[y+1][x+2]==0)
-            x++;
-            return true;
+            if(mas[y][x+2]==0&&mas[y+1][x+2]==0) {
+                clear();
+                x++;
+                draw();
+                return;
+            }
         }
-        return false;
     }
 
     @Override
     void draw() {
-        mas[y][x] =     isNegative ? -color : color;
-        mas[y][x+1] =   isNegative ? -color : color;
-        mas[y+1][x] =   isNegative ? -color : color;
-        mas[y+1][x+1] = isNegative ? -color : color;
+        mas[y][x] =     color;
+        mas[y][x+1] =   color;
+        mas[y+1][x] =   color;
+        mas[y+1][x+1] = color;
 }
-
+    @Override
+    void clear(){
+        mas[y][x] =     0;
+        mas[y][x+1] =   0;
+        mas[y+1][x] =   0;
+        mas[y+1][x+1] = 0;
+    }
 
 }

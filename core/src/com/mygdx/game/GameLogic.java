@@ -32,7 +32,6 @@ public class GameLogic {
         textures[3] = new Texture ("3.png");
         textures[4] = new Texture ("4.png");
         textures[5] = new Texture ("5.png");
-        fill0();
         curFig = new Square(rand.nextInt(5)+1, SpawnX, SpawnY, mas);
     }
 
@@ -47,32 +46,17 @@ public class GameLogic {
     }
     public void update() {
         if (gameCondition == 0){
-            if(curFig.move()){
-                fill0();
-                FieldUpdate();
-                curFig.draw();
-            }
+            curFig.move();
             time+=Gdx.graphics.getRawDeltaTime();
             if (time >= delay){
-                fill0();
                 curFig.fall();
-                curFig.draw();
-                FieldUpdate();
-                lineDestroy();
-                if (curFig.isNegative) curFig = new Square(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-                /*for (int i = 0; i < height; i++) {
-                    for (int j = 0; j < width; j++) {
-                      System.out.print(mas[i][j]);
-                   }
-                    System.out.println();
-                 }
-                System.out.println();*/
+                if (curFig.isLanded) {
+                    curFig = new Square(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
+                    lineDestroy();
+                }
                 time = 0;
             }
         }
-    }
-    public void FieldUpdate(){
-        curFig.draw();
     }
     public void GameOver(){
         gameCondition = 1;
@@ -83,7 +67,7 @@ public class GameLogic {
         int i = height - 1;
         while(i >= 0){
             int j = 0;
-            while(j < width && mas[i][j] < 0){
+            while(j < width && mas[i][j] != 0){
                 j++;
             }
             if(j == width){
@@ -94,13 +78,6 @@ public class GameLogic {
                 i++;
             }
             i--;
-        }
-    }
-    private void fill0(){
-        for (int i = height - 1; i >= 0; i -= 1){
-            for (int j = width - 1; j >= 0; j--){
-                if (mas[i][j] > 0) mas[i][j] = 0;
-            }
         }
     }
 
