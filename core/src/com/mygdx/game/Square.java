@@ -9,8 +9,6 @@ public class Square extends Figure {
     Square(int color, int x, int y, int[][] mas){
         super(color, x, y, mas);
         spawn(x, y);
-
-
     }
     int height = GameLogic.height;
     int width = GameLogic.width;
@@ -21,6 +19,10 @@ public class Square extends Figure {
             mas[y][x+1] =   color;
             mas[y+1][x] =   color;
             mas[y+1][x+1] = color;
+        }
+        else {
+            draw();
+            GameLogic.ChangeGameCond(1);
         }
     }
 
@@ -52,6 +54,10 @@ public class Square extends Figure {
                 return;
             }
         }
+    }
+    @Override
+    void rotate(){
+        //Так как это куб, то вращения не происходит
     }
 
     @Override
