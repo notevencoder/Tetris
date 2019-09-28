@@ -4,7 +4,6 @@ package com.mygdx.game;
 public abstract class Figure {
     boolean isNegative = false;
     int color;
-    int t = 123;
     int x , y;
     int[][] mas;
     Figure(int color, int SpawnX, int SpawnY, int[][] mas) {

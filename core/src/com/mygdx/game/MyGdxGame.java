@@ -8,18 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
 	Background bg;
 	Field fl;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		bg = new Background();
 		fl = new Field();
-
-
 	}
 
 	@Override
@@ -31,16 +27,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		bg.render(batch);
 		fl.update();
 		fl.render(batch);
-		//batch.draw(img, 0, 0);
 		batch.end();
 	}
-	public void update(){
 
-
-	}
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }
