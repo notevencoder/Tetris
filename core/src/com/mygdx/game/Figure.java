@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-
 public abstract class Figure {
     boolean isNegative = false;
     int color;
@@ -14,13 +13,12 @@ public abstract class Figure {
     }
 
     void update(){
-
         fall();
     }
 
 
     abstract void spawn(int x, int y);
-    abstract void move();
+    abstract boolean move();
     abstract void fall();
     abstract void setNegative();
     abstract void draw();

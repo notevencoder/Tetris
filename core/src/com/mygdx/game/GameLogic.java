@@ -7,14 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Random;
 
-public class Field {
+public class GameLogic {
 
     public int gameCondition = 0;
     private Texture[] textures;
-
-    private final int LB = 287, RB =737, bSize = 30;
-    private final int delay = 15;
-
+    private final int LB = 287, RB =587, bSize = 30;
+    private final float delay = 0.4f;
     private int[][] mas;
     Random rand = new Random();
     Figure curFig;
@@ -23,11 +21,9 @@ public class Field {
 
     final int SpawnX = 7, SpawnY = 0;
 
+    private float time = 0;
 
-    private int time = 0;
-
-
-    public Field() {
+    public GameLogic() {
         mas = new int[height][width];
         textures = new Texture[6];
         textures[0] = new Texture ("0.png");
@@ -38,7 +34,6 @@ public class Field {
         textures[5] = new Texture ("5.png");
         fill0();
         curFig = new Square(2, 7, 0, mas);
-
     }
 
 
@@ -53,13 +48,13 @@ public class Field {
     public void update() {
         if (gameCondition == 0){
             fill0();
-            curFig.move();
+            if(curFig.move()){
+                FieldUpdate();
+            }
             curFig.draw();
-            time++;
-            if (time == delay){
-
-
-            curFig.update();
+            time+=Gdx.graphics.getRawDeltaTime();
+            if (time >= delay){
+            curFig.fall();
 
             curFig.draw();
                 lineDestroy();
@@ -77,8 +72,10 @@ public class Field {
             }
         }
     }
+    public void FieldUpdate(){
 
-    public void GameOcer(){
+    }
+    public void GameOver(){
         gameCondition = 1;
 
     }
@@ -89,14 +86,8 @@ public class Field {
             int j = 0;
             while(j < width && mas[i][j] < 0){
                 j++;
-
             }
             if(j == width){
-
-                for (int k = 0; k < width; k++){
-                   mas[i][k] = 0;
-                }
-
                 for (int ii = i - 1; ii >= 0; ii--){
                     mas[ii + 1] = mas[ii].clone();
                 }

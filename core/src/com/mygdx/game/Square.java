@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
@@ -11,7 +12,8 @@ public class Square extends Figure {
 
 
     }
-
+    int height = GameLogic.height;
+    int width = GameLogic.width;
     @Override
     void setNegative() {
         mas[y][x]     *= -1;
@@ -30,8 +32,8 @@ public class Square extends Figure {
             mas[y+1][x+1] = color;
         }else {
 
-            for (int i = 0; i < Field.height; i++){
-                for (int j = 0; j < Field.width; j++){
+            for (int i = 0; i < GameLogic.height; i++){
+                for (int j = 0; j < GameLogic.width; j++){
                     mas[i][j] = 0;
                 }
             }
@@ -40,26 +42,25 @@ public class Square extends Figure {
 
     @Override
     void fall() {
-        if(y+2 < Field.height){
+        if(y+2 < GameLogic.height && mas[y+2][x]==0 && mas[y+2][x+1]==0){
             y++;
-            mas[y-1][x] = 0;
-            mas[y-1][x+1] = 0;
         }
-
-        if(y+2 == Field.height || mas[y+2][x] < 0 || mas[y+2][x+1] < 0) isNegative = true;
-
+        else isNegative = true;
     }
 
     @Override
-    void move() {
+    boolean move() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && x > 0){
+            if(mas[y][x-1]==0&&mas[y+1][x-1]==0)
             x--;
+            return true;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && x+2 < Field.width){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && x+2 < GameLogic.width) {
+            if(mas[y][x+2]==0&&mas[y+1][x+2]==0)
             x++;
+            return true;
         }
-
-
+        return false;
     }
 
     @Override
