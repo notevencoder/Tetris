@@ -30,13 +30,6 @@ public class Square extends Figure {
             mas[y][x+1] =   color;
             mas[y+1][x] =   color;
             mas[y+1][x+1] = color;
-        }else {
-
-            for (int i = 0; i < GameLogic.height; i++){
-                for (int j = 0; j < GameLogic.width; j++){
-                    mas[i][j] = 0;
-                }
-            }
         }
     }
 

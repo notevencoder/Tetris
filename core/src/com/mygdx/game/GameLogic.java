@@ -19,7 +19,7 @@ public class GameLogic {
 
     public static final int width = 10, height = 20;
 
-    final int SpawnX = 7, SpawnY = 0;
+    final int SpawnX = 4, SpawnY = 0;
 
     private float time = 0;
 
@@ -33,7 +33,7 @@ public class GameLogic {
         textures[4] = new Texture ("4.png");
         textures[5] = new Texture ("5.png");
         fill0();
-        curFig = new Square(2, 7, 0, mas);
+        curFig = new Square(rand.nextInt(5)+1, SpawnX, SpawnY, mas);
     }
 
 
@@ -47,33 +47,32 @@ public class GameLogic {
     }
     public void update() {
         if (gameCondition == 0){
-            fill0();
             if(curFig.move()){
+                fill0();
                 FieldUpdate();
+                curFig.draw();
             }
-            curFig.draw();
             time+=Gdx.graphics.getRawDeltaTime();
             if (time >= delay){
-            curFig.fall();
-
-            curFig.draw();
+                fill0();
+                curFig.fall();
+                curFig.draw();
+                FieldUpdate();
                 lineDestroy();
-
                 if (curFig.isNegative) curFig = new Square(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-            fill0();
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    System.out.print(mas[i][j]);
-                }
-                System.out.println();
-            }
-            System.out.println();
-            time = 0;
+                /*for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+                      System.out.print(mas[i][j]);
+                   }
+                    System.out.println();
+                 }
+                System.out.println();*/
+                time = 0;
             }
         }
     }
     public void FieldUpdate(){
-
+        curFig.draw();
     }
     public void GameOver(){
         gameCondition = 1;
