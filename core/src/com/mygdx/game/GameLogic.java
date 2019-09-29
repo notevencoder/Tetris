@@ -84,21 +84,23 @@ public class GameLogic {
     }
 
     // Создать фигуру
-    private Figure nextFig(){
-        switch (rand.nextInt(3)){
-            case 0:{
+    private Figure nextFig() {
+        switch (rand.nextInt(4)) {
+            case 0: {
                 return new Stick(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
             }
-            case 1:{
+            case 1: {
                 return new JCorner(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
             }
-            case 2:{
+            case 2: {
                 return new Square(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
             }
-            default:{
+            case 3: {
+                return new LFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
+            }
+            default: {
                 return null;
             }
         }
     }
-
 }
