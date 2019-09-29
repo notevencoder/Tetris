@@ -32,7 +32,7 @@ public class GameLogic {
         textures[3] = new Texture ("3.png");
         textures[4] = new Texture ("4.png");
         textures[5] = new Texture ("5.png");
-        curFig = new Square(rand.nextInt(5)+1, SpawnX, SpawnY, mas);
+        curFig = nextFig();
     }
 
 
@@ -85,20 +85,26 @@ public class GameLogic {
 
     // Создать фигуру
     private Figure nextFig() {
-        switch (rand.nextInt(5)) {
+        switch (rand.nextInt(7)) {
             case 0: {
-                return new Stick  (rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
+                return new OFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
             }
             case 1: {
-                return new JCorner(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
+                return new IFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
             }
             case 2: {
-                return new Square (rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
+                return new SFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
             }
             case 3: {
-                return new LFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
+                return new ZFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
             }
             case 4: {
+                return new LFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
+            }
+            case 5: {
+                return new JFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
+            }
+            case 6: {
                 return new TFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
             }
             default: {
