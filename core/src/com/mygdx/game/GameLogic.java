@@ -9,15 +9,19 @@ import java.util.Random;
 
 public class GameLogic {
 
-    public int gameCondition = 0;
+    static int gameCondition = 0;
     private Texture[] textures;
     private final int LB = 287, RB =587, bSize = 30;
     private float delay = 0.4f;
+    private float curDelay = 0.4f;
     private int[][] mas;
     Random rand = new Random();
     Figure curFig;
 
-    public static final int width = 10, height = 20;
+    int score = 0;
+
+
+    public static final int width = 15, height = 20;
 
     final int SpawnX = 4, SpawnY = 0;
 
@@ -47,8 +51,8 @@ public class GameLogic {
     public void update() {
         if (gameCondition == 0){
             curFig.move();
-            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) delay = 0.05f;
-            else delay = 0.4f;
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) delay = curDelay/8;
+            else delay = curDelay;
             time+=Gdx.graphics.getRawDeltaTime();
             if (time >= delay){
                 curFig.fall();
@@ -59,8 +63,16 @@ public class GameLogic {
                 time = 0;
             }
         }
+        else{
+            for(int i = height - 1; i >= 0; i--){
+                for(int j = width- 1; j >= 0; j--){
+                    mas[i][j] = 0;
+                }
+            }
+            gameCondition = 0;
+        }
     }
-    public void GameOver(){
+    public static void GameOver(){
         gameCondition = 1;
 
     }
@@ -78,6 +90,10 @@ public class GameLogic {
                 }
                 for (int n = 0; n < width; n++) mas[0][n] = 0;
                 i++;
+                score++;
+                System.out.println(score);
+                curDelay -= 0.01f;
+                if (curDelay < 0.2f) curDelay = 0.2f;
             }
             i--;
         }

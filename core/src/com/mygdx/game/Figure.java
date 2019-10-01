@@ -22,6 +22,7 @@ public abstract class Figure {
         this.mas = mas;
         x = SpawnX;
         y = SpawnY;
+
     }
     //вспомогательная функция, получающая на вход массив координат переменной длины, возвращающая true, если пересечений не найдено
     boolean checkCollisions(int... coordsXY){
@@ -55,7 +56,10 @@ public abstract class Figure {
             y++;
             draw();
         }
-        else isLanded = true;
+        else {
+            isLanded = true;
+            if (y == 0) GameLogic.GameOver();
+        }
     }
     void move(){
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
