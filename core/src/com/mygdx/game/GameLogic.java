@@ -7,59 +7,31 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.Currency;
 import java.util.Random;
 
 public class GameLogic {
 
-    static int gameCondition = 0;
-
-    private Texture[] textures;
-
-    private final int LB = 287, RB =587, bSize = 30;
-
-    private float delay = 0.4f;
-
+    public static int gameCondition = 0;
+    private float delay = 1f;
     private int score = 0;
     private BitmapFont scoreText = new BitmapFont();
     private int linesDestroyed = 0;
-    private float curDelay = 2/(float)(linesDestroyed + 5) + 0.2f;
-
-    private int[][] mas;
-    public static final int width = 15, height = 20;
-
+    private float curDelay = 5f/((float)(linesDestroyed/10)+5f);
+    public int[][] mas;
+    public static final int width = 10, height = 20;
     Figure curFig;
     final int SpawnX = width/2, SpawnY = 0;
     Random rand = new Random();
-
-
     private float time = 0;
-
-
     public GameLogic() {
         mas = new int[height][width];
-        textures = new Texture[6];
-        textures[0] = new Texture ("0.png");
-        textures[1] = new Texture ("1.png");
-        textures[2] = new Texture ("2.png");
-        textures[3] = new Texture ("3.png");
-        textures[4] = new Texture ("4.png");
-        textures[5] = new Texture ("5.png");
         curFig = nextFig();
         scoreText.setColor(Color.FIREBRICK);
-
-    }
-    public void render(SpriteBatch batch){
-        for  (int i = 0; i < height; i++){
-            for (int j = 0; j < width; j++){
-                batch.draw(textures[Math.abs(mas[i][j])], LB + j * bSize, Math.abs(i - height + 1) * bSize);
-                scoreText.draw(batch, String.valueOf(score),0, 600);
-            }
-        }
     }
     public void update() {
-        if (gameCondition == 0){
             curFig.move();
-            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) delay = curDelay/8;
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) delay = curDelay/20;
             else delay = curDelay;
             time+=Gdx.graphics.getRawDeltaTime();
             if (time >= delay){
@@ -71,17 +43,7 @@ public class GameLogic {
                 time = 0;
             }
         }
-        /*else{
-            for(int i = height - 1; i >= 0; i--){
-                for(int j = width- 1; j >= 0; j--){
-                    mas[i][j] = 0;
-                }
-            }
-            gameCondition = 0;
-        }*/
-    }
     public static void GameOver(){ gameCondition = 1; }
-
     private void lineDestroy(){
         int i = height - 1;
         int amount = 0;
@@ -101,7 +63,7 @@ public class GameLogic {
                 i++;
                 amount++;
                 linesDestroyed++;
-                curDelay = 2/(float)(linesDestroyed + 5) + 0.15f;
+                curDelay = 5f/((float)(linesDestroyed/10)+5f);
             }
             i--;
         }
