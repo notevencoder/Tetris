@@ -17,16 +17,9 @@ public class GameLogic {
     private int[][] mas;
     Random rand = new Random();
     Figure curFig;
-
-    int score = 0;
-
-
-    public static final int width = 15, height = 20;
-
+    public static final int width = 10, height = 20;
     final int SpawnX = 4, SpawnY = 0;
-
     private float time = 0;
-
     public GameLogic() {
         mas = new int[height][width];
         textures = new Texture[6];
@@ -38,9 +31,6 @@ public class GameLogic {
         textures[5] = new Texture ("5.png");
         curFig = nextFig();
     }
-
-
-
     public void render(SpriteBatch batch){
         for  (int i = 0; i < height; i++){
             for (int j = 0; j < width; j++){
@@ -63,20 +53,16 @@ public class GameLogic {
                 time = 0;
             }
         }
-        else{
+        /*else{
             for(int i = height - 1; i >= 0; i--){
                 for(int j = width- 1; j >= 0; j--){
                     mas[i][j] = 0;
                 }
             }
             gameCondition = 0;
-        }
+        }*/
     }
-    public static void GameOver(){
-        gameCondition = 1;
-
-    }
-
+    public static void GameOver(){ gameCondition = 1; }
     private void lineDestroy(){
         int i = height - 1;
         while(i >= 0){
@@ -90,42 +76,12 @@ public class GameLogic {
                 }
                 for (int n = 0; n < width; n++) mas[0][n] = 0;
                 i++;
-                score++;
-                System.out.println(score);
-                curDelay -= 0.01f;
-                if (curDelay < 0.2f) curDelay = 0.2f;
             }
             i--;
         }
     }
-
-    // Создать фигуру
+    // Функция, возвращающая объект Figure со случайными типом и цветом
     private Figure nextFig() {
-        switch (rand.nextInt(7)) {
-            case 0: {
-                return new OFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-            }
-            case 1: {
-                return new IFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-            }
-            case 2: {
-                return new SFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-            }
-            case 3: {
-                return new ZFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-            }
-            case 4: {
-                return new LFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-            }
-            case 5: {
-                return new JFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-            }
-            case 6: {
-                return new TFigure(rand.nextInt(5) + 1, SpawnX, SpawnY, mas);
-            }
-            default: {
-                return null;
-            }
+        return new Figure(rand.nextInt(7),rand.nextInt(5) + 1,SpawnX,SpawnY,mas);
         }
-    }
 }
