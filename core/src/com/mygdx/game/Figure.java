@@ -115,6 +115,7 @@ public class Figure {
         this.mas = mas;
         this.x = SpawnX;
         this.y = SpawnY;
+        draw();
     }
 
     //Функция для проверки коллизий. Получает на вход массив относительных координат.
