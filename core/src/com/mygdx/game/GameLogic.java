@@ -50,6 +50,10 @@ public class GameLogic {
 
         public static void GameOver(){ gameCondition = 1; }
 
+        public static boolean isGameOver(){
+            return gameCondition == 1? true: false;
+        }
+
         private void lineDestroy(){
         int i = height - 1;
         int amount = 0;
