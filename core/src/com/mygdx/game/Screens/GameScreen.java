@@ -18,10 +18,11 @@ public class GameScreen implements Screen{
     Game game;
     Stage stage;
 
-    final int height = 20, width = 10;
+    int height = 20, width = 10;
     private Texture[] textures;
     Image[][] image;
-    int bSize = Gdx.graphics.getHeight() / 20, center =Gdx.graphics.getWidth() / 2 , LB =center -  width * bSize / 2;
+    int bSize =Gdx.graphics.getHeight()/20,  LB = Gdx.graphics.getWidth()/2 - width*bSize/2; //клетка динамически вытягивается при инициализации
+
 
     Texture bg;
     GameLogic gl;
@@ -51,8 +52,8 @@ public class GameScreen implements Screen{
             for(int j=0;j<width;j++){
                 image[i][j] = new Image(textures[gl.mas[i][j]]);
                 image[i][j].setPosition(LB + j * bSize, Math.abs(i - height + 1) * bSize);
-                //image[i][j].scaleBy(1);
                 stage.addActor(image[i][j]);
+                image[i][j].setSize(bSize,bSize); // Изменяем размер картинки, чтобы не было пропусков между клетками
 
             }
         }
