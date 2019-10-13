@@ -13,6 +13,7 @@ import java.util.Random;
 public class GameLogic {
 
     public static int gameCondition = 0;
+
     private float delay = 1f;
     private int score = 0;
     private BitmapFont scoreText = new BitmapFont();
@@ -24,11 +25,14 @@ public class GameLogic {
     final int SpawnX = width/2, SpawnY = 0;
     Random rand = new Random();
     private float time = 0;
+
+
     public GameLogic() {
         mas = new int[height][width];
         curFig = nextFig();
         scoreText.setColor(Color.FIREBRICK);
     }
+
     public void update() {
             curFig.move();
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) delay = curDelay/20;
@@ -43,8 +47,10 @@ public class GameLogic {
                 time = 0;
             }
         }
-    public static void GameOver(){ gameCondition = 1; }
-    private void lineDestroy(){
+
+        public static void GameOver(){ gameCondition = 1; }
+
+        private void lineDestroy(){
         int i = height - 1;
         int amount = 0;
 
