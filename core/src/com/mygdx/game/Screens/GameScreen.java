@@ -50,6 +50,7 @@ public class GameScreen implements Screen{
         for (int i = 0; i < height; i++){
             for(int j=0;j<width;j++){
                 image[i][j] = new Image(textures[gl.mas[i][j]]);
+                image[i][j].setSize(bSize, bSize);
                 image[i][j].setPosition(LB + j * bSize, Math.abs(i - height + 1) * bSize);
                 //image[i][j].scaleBy(1);
                 stage.addActor(image[i][j]);

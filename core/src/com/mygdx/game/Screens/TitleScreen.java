@@ -21,7 +21,9 @@ public class TitleScreen implements Screen{
     private Game game;
     private Stage stage;
     private Label title;
-    private TextButton start, option, exit;
+    private MenuButton start, options, exit;
+    private int curWidth = Gdx.graphics.getWidth();
+    private int curHeight = Gdx.graphics.getHeight();
 
     public TitleScreen(Game aGame){
             game = aGame;
@@ -42,61 +44,36 @@ public class TitleScreen implements Screen{
             ///////////////////////////////////////////////////
 
             ////Кнопка старта игры/////////////////////////////
-            start = new MenuButton("Start Game", MyGdxGame.gameSkin);                                                           //Инициализация (текст надписи, скин(см main), стиль текста(есть не во всех скинах))
-            start.setWidth(Gdx.graphics.getWidth() / 16 * 8);                                                    //Задаем ширину кнопки
-            start.setPosition(Gdx.graphics.getWidth() / 16 * 4,Gdx.graphics.getHeight() / 10 * 6);        //Задаем координаты кнопки
-            start.setTransform(true);
-            //start.scaleBy(1);
-            start.addListener(new InputListener(){                                                                   //  InputListener - штука, которая обрабатывает нажатия
-                @Override                                                                                            //
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {                  //  обработка момента "отжатия" кнопки
-                    game.setScreen(new GameScreen(game));                                                            //  переключение на GameScreen
-                }                                                                                                    //
-                @Override                                                                                            //
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {             //  Обработка нажатия
-                    return true;                                                                                     //
+            start = new MenuButton("Start Game"){
+                @Override
+                public void onClick(){
+                    game.setScreen(new GameScreen(game));
                 }
-            });
+            };
+            start.setPosition(curWidth / 4, curHeight /4 + 3 * curHeight / 10);
             stage.addActor(start);
             ///////////////////////////////////////////////////
 
             //  Далее все кнопки делаются аналогично
 
             ////Кнопка настроек игры///////////////////////////
-            option = new TextButton("Options", MyGdxGame.gameSkin);
-            option.setWidth(Gdx.graphics.getWidth() / 16 * 8);
-            option.scaleBy(0.05f);
-            option.setPosition(Gdx.graphics.getWidth() / 16 * 4,Gdx.graphics.getHeight() / 10 * 4);
-
-            option.addListener(new InputListener(){
+            options = new MenuButton("Options"){
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void onClick(){
                     game.setScreen(new OptionScreen(game));
                 }
-                @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-                }
-            });
-            stage.addActor(option);
+            };
+            options.setPosition(curWidth / 4, curHeight / 4 + 1.5f * curHeight / 10);
+            stage.addActor(options);
             ///////////////////////////////////////////////////
 
             ////Кнопка выхода из игры//////////////////////////
-            exit = new TextButton("Exit game", MyGdxGame.gameSkin);
-            exit.setWidth(Gdx.graphics.getWidth() / 16 * 8);
-            //start.scaleBy(0.5f);
-            exit.setPosition(Gdx.graphics.getWidth() / 16 * 4,Gdx.graphics.getHeight() / 10 * 2);
-
-            exit.addListener(new InputListener(){
+            exit = new MenuButton("Exit game"){
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void onClick(){
                     Gdx.app.exit();
                 }
-                @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-                }
-            });
+            };
             stage.addActor(exit);
             ///////////////////////////////////////////////////
 
@@ -114,11 +91,6 @@ public class TitleScreen implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        start.setWidth(Gdx.graphics.getWidth() / 16 * 8);
-        start.setPosition(Gdx.graphics.getWidth() / 16 * 4,Gdx.graphics.getHeight() / 10 * 6);
-
-        option.setPosition(Gdx.graphics.getWidth() / 16 * 4,Gdx.graphics.getHeight() / 10 * 4);
-        exit.setPosition(Gdx.graphics.getWidth() / 16 * 4,Gdx.graphics.getHeight() / 10 * 2);
 
         stage.act();
         stage.draw();
@@ -126,7 +98,8 @@ public class TitleScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-
+        if (curHeight != height || curWidth != width)
+        game.setScreen(new TitleScreen(game));
     }
 
     @Override

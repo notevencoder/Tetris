@@ -3,21 +3,26 @@ package com.mygdx.game.Buttons;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Screens.GameScreen;
 
-public class MenuButton extends TextButton {
+import java.lang.reflect.Method;
+
+public class MenuButton extends ImageTextButton {
 
     private BitmapFont menuFont;
     private TextureAtlas atlas;
     private Skin skin;
+    public MenuButton(String text) {
 
-    public MenuButton(String text, Skin skin1) {
-
-        super(text, skin1);
+        super(text, MyGdxGame.gameSkin);
 
 
         atlas = new TextureAtlas("ui/menu_button.pack");
@@ -25,25 +30,30 @@ public class MenuButton extends TextButton {
 
 
 
-
         menuFont = new BitmapFont(Gdx.files.internal("fonts/menu.fnt"), false);
 
-        TextButtonStyle textButtonStyle = new TextButtonStyle();
-        textButtonStyle.up = skin.getDrawable("button.up");
-        textButtonStyle.down = skin.getDrawable("button.down");
-        textButtonStyle.pressedOffsetX =  1;
-        textButtonStyle.pressedOffsetY = -1;
-        textButtonStyle.font = menuFont;
+        final ImageTextButtonStyle imageTextButtonStyle = new ImageTextButtonStyle();
+        imageTextButtonStyle.up = skin.getDrawable("button.up");
+        imageTextButtonStyle.down = skin.getDrawable("button.down");
+        imageTextButtonStyle.pressedOffsetX =  1;
+        imageTextButtonStyle.pressedOffsetY = -1;
+        imageTextButtonStyle.font = menuFont;
 
 
+        addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                onClick();
+            }
+        });
 
-
-        this.setStyle(textButtonStyle);
-        //this.setTransform(true);
+        this.setBounds(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/10);
+        this.setStyle(imageTextButtonStyle);
+        this.setTransform(true);
 
 
     }
 
-
+    public void onClick(){}
 
 }
