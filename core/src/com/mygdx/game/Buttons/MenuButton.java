@@ -47,11 +47,14 @@ public class MenuButton extends ImageTextButton {
             }
         });
 
-        this.setBounds(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/10);
+        this.setSize(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/10);
         this.setStyle(imageTextButtonStyle);
         this.setTransform(true);
 
 
+    }
+    public Skin getSkin(){
+        return skin;
     }
 
     public void onClick(){}

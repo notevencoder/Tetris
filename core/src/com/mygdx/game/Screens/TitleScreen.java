@@ -10,7 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
+
+
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Buttons.MenuButton;
 import com.mygdx.game.MyGdxGame;
 
@@ -20,27 +23,29 @@ public class TitleScreen implements Screen{
 
     private Game game;
     private Stage stage;
+    private Table table;
     private Label title;
     private MenuButton start, options, exit;
     private int curWidth = Gdx.graphics.getWidth();
     private int curHeight = Gdx.graphics.getHeight();
+    private TextureAtlas atlas;
+    private Skin skin;
+    
 
     public TitleScreen(Game aGame){
-            game = aGame;
-            stage = new Stage(new ScreenViewport());
 
+
+            game = aGame;
+            stage = new Stage();
+
+            table = new Table();
+            table.setBounds(0,0,Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
 
 
 
             ////Надпись Тетрис/////////////////////////////////
-
-
-
-            title = new Label("TetriS", MyGdxGame.gameSkin,"big");    //Инициализация (текст надписи, скин(см main), стиль текста(есть не во всех скинах))
-            title.setAlignment(Align.center);                                       //Центровка текста
-            title.setY(Gdx.graphics.getHeight() / 10 * 8);                          //Позиционирование надписи по У
-            title.setWidth(Gdx.graphics.getWidth());                                //Установка ширины надписи
-            stage.addActor(title);                                                  //Добавдение актера на сцены
+            title = new Label("TetriS", MyGdxGame.gameSkin,"big");      //Инициализация (текст надписи, скин(см main), стиль текста(есть не во всех скинах))
+            title.setFontScale(2);
             ///////////////////////////////////////////////////
 
             ////Кнопка старта игры/////////////////////////////
@@ -50,8 +55,9 @@ public class TitleScreen implements Screen{
                     game.setScreen(new GameScreen(game));
                 }
             };
-            start.setPosition(curWidth / 4, curHeight /4 + 3 * curHeight / 10);
-            stage.addActor(start);
+            start.pad(10);
+
+
             ///////////////////////////////////////////////////
 
             //  Далее все кнопки делаются аналогично
@@ -60,11 +66,13 @@ public class TitleScreen implements Screen{
             options = new MenuButton("Options"){
                 @Override
                 public void onClick(){
-                    game.setScreen(new OptionScreen(game));
+                    //game.setScreen(new OptionScreen(game));
                 }
             };
-            options.setPosition(curWidth / 4, curHeight / 4 + 1.5f * curHeight / 10);
-            stage.addActor(options);
+            options.pad(10);
+
+        //options.setPosition(curWidth / 4, curHeight / 4 + 1.5f * curHeight / 10);
+
             ///////////////////////////////////////////////////
 
             ////Кнопка выхода из игры//////////////////////////
@@ -73,9 +81,31 @@ public class TitleScreen implements Screen{
                 public void onClick(){
                     Gdx.app.exit();
                 }
+
             };
-            stage.addActor(exit);
-            ///////////////////////////////////////////////////
+            exit.pad(10);
+
+
+                ///////////////////////////////////////////////////
+
+
+
+            table.add(title);
+            table.row();
+            table.getCell(title).spaceBottom(20);
+            table.add(start);
+            table.row();
+            table.getCell(start).spaceBottom(20);
+            table.add(options);
+            table.row();
+            table.getCell(options).spaceBottom(20);
+            table.add(exit);
+            table.row();
+            table.getCell(exit).spaceBottom(20);
+            stage.addActor(table);
+            table.debug();
+
+
 
 
     }
@@ -98,8 +128,9 @@ public class TitleScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        if (curHeight != height || curWidth != width)
-        game.setScreen(new TitleScreen(game));
+        stage.getViewport().update(width, height, true);
+
+
     }
 
     @Override
