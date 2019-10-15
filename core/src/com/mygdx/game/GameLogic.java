@@ -12,24 +12,26 @@ import java.util.Random;
 
 public class GameLogic {
 
-    public static int gameCondition = 0;
 
-    private float delay = 1f;
-    private int score = 0;
-    private BitmapFont scoreText = new BitmapFont();
-    private int linesDestroyed = 0;
-    private float curDelay = 5f/((float)(linesDestroyed/10)+5f);
-    public int[][] mas;
     public static final int width = 10, height = 20;
-    Figure curFig;
     final int SpawnX = width/2, SpawnY = 0;
-    Random rand = new Random();
-    private float time = 0;
 
+    public int[][]      mas;
+    Figure              curFig;
+    private BitmapFont  scoreText           = new BitmapFont();
+    Random              rand                = new Random();
+    public static int   gameCondition       = 0;
+    private float       delay               = 1f;
+    private float       time                = 0;
+    private int         nextFig             = rand.nextInt(7);
+    private int         nextFigColor        = rand.nextInt(5) + 1;
+    private int         linesDestroyed      = 0;
+    private int         score               = 0;
+    private float       curDelay            = 5f/((float)(linesDestroyed/10)+5f);
 
     public GameLogic() {
         mas = new int[height][width];
-        curFig = nextFig();
+        curFig = newFig();
         scoreText.setColor(Color.FIREBRICK);
     }
 
@@ -42,7 +44,7 @@ public class GameLogic {
                 curFig.fall();
                 if (curFig.isLanded) {
                     lineDestroy();
-                    curFig = nextFig();
+                    curFig = newFig();
                 }
                 time = 0;
             }
@@ -81,7 +83,10 @@ public class GameLogic {
 
     }
     // Функция, возвращающая объект Figure со случайными типом и цветом
-    private Figure nextFig() {
-        return new Figure(rand.nextInt(7),rand.nextInt(5) + 1,SpawnX,SpawnY,mas);
+    private Figure newFig() {
+        Figure f = new Figure(nextFig,nextFigColor,SpawnX,SpawnY,mas);
+        nextFig = rand.nextInt(7);
+        nextFigColor = rand.nextInt(5) + 1;
+        return f;
         }
 }
